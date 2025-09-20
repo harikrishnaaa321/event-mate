@@ -2,11 +2,14 @@ import Event from "../Models/Event.Model.js";
 
 const CreateEvent = async (req, res) => {
   try {
-    const { title, description, date, location, capacity, organizer } = req.body;
+    const { title, description, date, location, capacity } = req.body;
 
-    if (!title || !description || !date || !location || !capacity || !organizer) {
+    if (!title || !description || !date || !location || !capacity) {
       return res.status(400).json({ status: 400, message: "Enter all fields" });
     }
+
+    // Use logged-in user from ProtectRoutes middleware
+    const organizer = req.user._id;
 
     const event = new Event({
       title,
@@ -14,11 +17,15 @@ const CreateEvent = async (req, res) => {
       date,
       location,
       capacity,
-      organizer,
+      organizer, // automatically set
     });
 
     await event.save();
-    return res.status(201).json({ status: 201, message: "Event created successfully", data: event });
+    return res.status(201).json({
+      status: 201,
+      message: "Event created successfully",
+      data: event
+    });
   } catch (error) {
     res.status(500).json({ status: 500, message: error.message });
   }

@@ -4,7 +4,7 @@ import {
   GetTickets,
   UpdateTicket,
   DeleteTicket
-} from "../Controllers/Booking.Controller.js";
+} from "../Controllers/Ticket.Controller.js";
 
 const router = express.Router();
 router.post("/tickets", BookTicket);

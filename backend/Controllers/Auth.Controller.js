@@ -1,5 +1,5 @@
 import express from "express";
-import User from "../Models/User.Model.js";
+import User from "../Models/Auth.Model.js";
 import bcrypt from "bcrypt";
 import generateToken from "../utils/GenerateToken.js";
 
