@@ -25,7 +25,7 @@ const RegisterHandler = async (req, res) => {
   const user = new User({ username, email, password: hashedPassword });
   await user.save();
   generateToken(username, res);
-  return res.status(200).json({"status":200,message:"created successfully"});
+  return res.status(200).json({ status: 200, message: "created successfully" });
 };
 
 const LoginHandler = async (req, res) => {
@@ -43,8 +43,14 @@ const LoginHandler = async (req, res) => {
         .json({ status: 201, message: "passwords dont match" });
     }
     generateToken(isUser._id, res);
-    return res.status(200).json({ status: 200, message: "login success" })
+    return res.status(200).json({ status: 200, message: "login success" });
   }
 };
 
-export { LoginHandler, RegisterHandler };
+const LogoutHandler = async (req, res) => {
+  res.cookie("jwt", "", {
+    maxAge: 0,
+  });
+  res.status(200).json({ status: 200, message: "loggout successfully" });
+};
+export { LoginHandler, RegisterHandler, LogoutHandler };
